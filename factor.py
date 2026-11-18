@@ -12,6 +12,11 @@ def factor(N: int) -> tuple[int, int]:
     if N % 2 == 0:
         return 2, 0
 
+    # check if N is a perfect square
+    sqrt = int(round(math.sqrt(N)))
+    if sqrt * sqrt == N:
+        return sqrt, 0
+
     # check that N is composite
     if isPrime(N):
         return N, 0
@@ -104,10 +109,23 @@ if __name__ == "__main__":
             print("N must be in integer")
             continue
 
-        firstFactor = True
-        while not isPrime(N):
-            x, _ = factor(N)
-            print(f"N = {x}" if firstFactor else f" * {x}", end="")
-            N //= x
-            firstFactor = False
-        print(f" * {N}") 
+        primeFactors = []
+        compositeFactors = [N]
+        while len(compositeFactors) > 0:
+            current = compositeFactors[0]
+            compositeFactors = compositeFactors[1:]
+            if isPrime(current):
+                primeFactors.append(current)
+            else:
+                x, _ = factor(current)
+                compositeFactors.append(x)
+                if x != current:
+                    compositeFactors.append(current // x)
+        primeFactors.sort()
+        condensed = []
+        while len(primeFactors) > 0:
+            currentPrime = primeFactors[0]
+            currentPower = primeFactors.count(currentPrime)
+            primeFactors = primeFactors[currentPower:]
+            condensed.append(str(currentPrime) if currentPower == 1 else f"{currentPrime}^{currentPower}")
+        print(f"N = {" * ".join(condensed)}")

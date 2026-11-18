@@ -8,7 +8,7 @@ time_minutes = [x / 60 for x in time_values]
 D_values = [x if -x % 4 == 1 else 4 * x for x in N_values]
 time_weighted = [time_minutes[i] / BSGS_count_values[i] for i in range(len(time_values))]
 
-D4_values = [pow(x, 1/4) for x in D_values]
+T4_values = [pow(x, 4) for x in time_weighted]
 
 # generation of figures used in thesis
 
@@ -39,9 +39,9 @@ plt.show()
 
 # weighted results ^4
 fig, ax = plt.subplots()
-ax.set_ylabel("running time per BSGS call (minutes)")
-ax.set_xlabel("D^(1/4)")
-ax.plot(D4_values, time_weighted, "ko")
+ax.set_ylabel("running time^4 per BSGS call (minutes)")
+ax.set_xlabel("D")
+ax.plot(D_values, T4_values, "ko")
 formatter = ticker.ScalarFormatter(useMathText=True)
 formatter.set_scientific(True)
 formatter.set_powerlimits((0, 0))

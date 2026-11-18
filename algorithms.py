@@ -79,10 +79,10 @@ def modSqrt(a: int, p: int):
 def isPrime(p: int):
     if p < 1:
         raise ValueError("p must be a positive integer")
-    if p % 2 == 0 or p == 1:
-        return False
     if p in [2, 3]:
         return True
+    if p % 2 == 0 or p == 1:
+        return False
     
     # Step 1: Initialise
     q = p - 1
